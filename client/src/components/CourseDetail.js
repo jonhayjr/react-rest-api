@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import { NavLink } from 'react-router-dom';
 
 //Import axios 
 import axios from 'axios';
@@ -56,9 +57,9 @@ const CourseDetail = (props) => {
                 (
                 <form>
                     <div className="wrap">
-                        <a className="button" href={`/courses/${course.id}/update`}>Update Course</a>
+                        <NavLink className="button" to={`/courses/${course.id}/update`}>Update Course</NavLink>
                         <a className="button" href="/" >Delete Course</a>
-                        <a className="button button-secondary" href="/">Return to List</a>
+                        <NavLink className="button button-secondary" to="/">Return to List</NavLink>
                     </div>
                     <div className="main--flex">
                         <div>
