@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import { NavLink } from 'react-router-dom';
 
 //Import axios 
 import axios from 'axios';
@@ -19,8 +18,6 @@ const CourseDetail = (props) => {
          .then(res => {
            //Store course in state
            setCourse(res.data);
-           console.log(res.data)
-
         })
         .finally(() => {
             //Set isLoading to False
@@ -30,12 +27,9 @@ const CourseDetail = (props) => {
        
        //Gets data on page render
        useEffect(() => {
-        //Get id from url parameter
-        const id = props.match.params.id
-
         //Get course data based on id
-         getCourse(id);
-       }, [])
+         getCourse(props.match.params.id);
+       }, [props.match.params.id])
 
        //Parse description element and create separate paragraphs
        const description = course.description 
