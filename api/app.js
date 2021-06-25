@@ -11,11 +11,11 @@ const { sequelize } = require('./models');
 // variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 
-// Enable All CORS Requests
-app.use(cors());
-
 // create the Express app
 const app = express();
+
+// Enable All CORS Requests
+app.use(cors());
 
 app.use(express.json());
 
