@@ -6,6 +6,7 @@ import { Switch, Route, BrowserRouter} from 'react-router-dom';
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
+import UpdateCourse from './components/UpdateCourse';
 
 const App = () => {
 
@@ -16,8 +17,9 @@ const App = () => {
       <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Courses}/>
-            <Route exact path="/Courses" component={Courses}/>
-            <Route path="/Courses/:id" component={CourseDetail}/>
+            <Route exact path="/courses" component={Courses}/>
+            <Route exact path="/courses/:id" component={CourseDetail}/>
+            <Route path="/courses/:id/update" component={UpdateCourse}/>
         </Switch>
       </BrowserRouter>
     </div>
