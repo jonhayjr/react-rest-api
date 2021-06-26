@@ -8,6 +8,14 @@ const CourseDetail = (props) => {
        //Create State
        const [course, setCourse] = useState([]);
        const [isLoading, setIsLoading] = useState(true);
+
+        //Context Variable
+        const {context} = props;
+
+        //Get Authenticated User
+        const authUser = context.authenticatedUser;
+        //Get Authenticated User ID
+        const authUserId = authUser ? authUser.id : null;
    
 
        //Function to grab API data
@@ -57,8 +65,14 @@ const CourseDetail = (props) => {
                 (
                 <form>
                     <div className="wrap">
-                        <NavLink className="button" to={`/courses/${course.id}/update`}>Update Course</NavLink>
-                        <a className="button" href="/" >Delete Course</a>
+                    {   authUser && authUserId === course.userId 
+                        ?
+                        <>
+                            <NavLink className="button" to={`/courses/${course.id}/update`}>Update Course</NavLink>
+                            <a className="button" href="/" >Delete Course</a>
+                        </>
+                        : ''
+                    }
                         <NavLink className="button button-secondary" to="/">Return to List</NavLink>
                     </div>
                     <div className="main--flex">

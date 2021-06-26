@@ -14,10 +14,14 @@ const CreateCourse = (props) => {
     //Context Variable
     const {context} = props;
 
-    //Get Authenticated User and first and last name
+
+     //Get Authenticated User
     const authUser = context.authenticatedUser;
+     //Get Authenticated User First Name
     const firstName = authUser ? authUser.firstName : '';
+    //Get Authenticated User Last Name
     const lastName = authUser ? authUser.lastName : '';
+    //Get Authenticated User ID
     const userId = authUser ? authUser.id : null;
 
     //Handle change input
