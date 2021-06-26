@@ -14,6 +14,7 @@ import PrivateRoute from './PrivateRoute';
 
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
+const UserSignUpWithContext = withContext(UserSignUp);
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
             <Route exact path="/courses/:id" component={CourseDetail}/>
             <Route path="/courses/:id/update" component={UpdateCourse}/>
             <Route path="/signin" component={UserSignInWithContext} />
-            <Route path="/signup" component={UserSignUp} />
+            <Route path="/signup" component={UserSignUpWithContext} />
             <Route path="/signout" component={UserSignOutWithContext} />
         </Switch>
       </BrowserRouter>

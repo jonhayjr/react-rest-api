@@ -40,7 +40,7 @@ const UserSignIn = (props) => {
       });
   }
 
-  //Function to handle form cancellation
+  //Function to handle form cancel
   const handleCancel = (e) => {
     e.preventDefault();
       history.push('/');
