@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory, Redirect } from 'react-router-dom';
 
 //Import axios 
 import axios from 'axios';
@@ -7,10 +7,15 @@ import axios from 'axios';
 const CourseDetail = (props) => {
        //Create State
        const [course, setCourse] = useState([]);
+       const [userFirstName, setUserFirstName] = useState('');
+       const [userLastName, setUserLastName] = useState('');
+       const [errors, setErrors] = useState([]);
        const [isLoading, setIsLoading] = useState(true);
 
         //Context Variable
         const {context} = props;
+
+        const history = useHistory();
 
         //Get Authenticated User
         const authUser = context.authenticatedUser;
@@ -27,6 +32,12 @@ const CourseDetail = (props) => {
          .then(res => {
            //Store course in state
            setCourse(res.data);
+
+           //Store course user firstName
+           setUserFirstName(res.data.User.firstName);
+
+            //Store course user lastName
+            setUserLastName(res.data.User.lastName);
         })
         .finally(() => {
             //Set isLoading to False
@@ -39,6 +50,24 @@ const CourseDetail = (props) => {
         //Get course data based on id
          getCourse(props.match.params.id);
        }, [props.match.params.id])
+
+       //Handles course deletion
+       const deleteCourse = () => {
+            
+            context.data.deleteCourse(course.id, authUser.emailAddress, authUser.password)
+            .then( errors => {
+            if (errors.length) {
+                setErrors({errors})
+            } else {
+                history.push('/');
+            }
+            })
+            .catch((err) => {
+            console.log(err);
+            history.push('/error');
+            });
+
+       }
 
        //Parse description element and create separate paragraphs
        const description = course.description 
@@ -69,7 +98,7 @@ const CourseDetail = (props) => {
                         ?
                         <>
                             <NavLink className="button" to={`/courses/${course.id}/update`}>Update Course</NavLink>
-                            <a className="button" href="/" >Delete Course</a>
+                            <a className="button" onClick={deleteCourse} href='/' >Delete Course</a>
                         </>
                         : ''
                     }
@@ -79,7 +108,9 @@ const CourseDetail = (props) => {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
-                            <p>By {course.User.firstName} {course.User.lastName}</p>
+                    
+                            <p>By {userFirstName} {userLastName}</p>
+    
                             { 
                                 description
                             }

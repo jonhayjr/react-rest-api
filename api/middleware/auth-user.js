@@ -14,9 +14,13 @@ exports.authenticateUser = async (req, res, next) => {
     if (credentials) {
         const user = await User.findOne({where: {emailAddress: credentials.name}, attributes: { exclude: ['createdAt', 'updatedAt'] }});
         if (user) {
-            const authenticated = bcrypt
+            //Compare unhashed password to hashed password in DB
+            const authenticated1 = bcrypt
                 .compareSync(credentials.pass, user.password);
-            if (authenticated) { //If the passwords match
+            //Compare two hashed passwords
+            const authenticated2 = credentials.pass === user.password;
+    
+            if (authenticated1 || authenticated2) { //If the passwords match
                 console.log(`Authentication successful for user: ${user.emailAddress}`);
                 
                 //Store the user on the Request object

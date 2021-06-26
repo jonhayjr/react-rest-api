@@ -14,7 +14,6 @@ const CreateCourse = (props) => {
     //Context Variable
     const {context} = props;
 
-
      //Get Authenticated User
     const authUser = context.authenticatedUser;
      //Get Authenticated User First Name
@@ -63,7 +62,6 @@ const CreateCourse = (props) => {
 
     //Function to handle cancel
     const handleCancel = (e) => {
-        //prevents default form behavior
         //redirects to index route
         history.push('/');
     }
@@ -71,7 +69,24 @@ const CreateCourse = (props) => {
   //Function to handle submitted form
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+
+    //Creates user object
+    const course = {title, description, estimatedTime, materialsNeeded, userId};
+
+    
+    context.data.createCourse(course, authUser.emailAddress, authUser.password)
+    .then( errors => {
+      if (errors.length) {
+        setErrors({errors})
+      } else {
+        history.push('/');
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      history.push('/error');
+    });
+
   }  
     return (
         <div className="wrap">
