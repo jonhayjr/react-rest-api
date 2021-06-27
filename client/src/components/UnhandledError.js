@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink} from 'react-router-dom';
 
-const Error = () => {
+const UnhandledError = () => {
     return (
     <div className="wrap">
         <h2>Error</h2>
@@ -11,4 +11,4 @@ const Error = () => {
     )
 }
 
-export default Error
+export default UnhandledError
