@@ -208,8 +208,9 @@ input:focus, button:focus, .button:focus, textarea:focus {
 .validation--errors--label {
     color: #7c689b;
     font-size: 28px;
+    margin-bottom: 10px;
   }
-  .validation-errors ul {
+  .validation-errors {
     color: #7c689b;
     padding: 15px 0 40px 10px;
   }

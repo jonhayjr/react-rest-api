@@ -93,7 +93,7 @@ const UpdateCourse = (props) => {
         context.data.updateCourse(course.id, updatedCourse, authUser.emailAddress, password)
         .then( errors => {
         if (errors.length) {
-            setErrors({errors})
+            setErrors(errors)
         } else {
             history.push('/');
         }
@@ -105,9 +105,28 @@ const UpdateCourse = (props) => {
 
    }
 
+    //Handle errors display
+  const ErrorsDisplay = ({ errors }) => {
+    let errorsDisplay = null;
+  
+    if (errors.length) {
+      errorsDisplay = (
+        <div>
+          <h2 className="validation--errors--label">Validation errors</h2>
+            <ul className="validation-errors">
+              {errors.map((error, i) => <li key={i}>{error}</li>)}
+            </ul>
+        </div>
+      );
+    }
+  
+    return errorsDisplay;
+  }
+
     return (
              <div className="wrap">
                 <h2>Update Course</h2>
+                <ErrorsDisplay errors={errors} />
                 {
                 isLoading
                 ? <p>Loading...</p>

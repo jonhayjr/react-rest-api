@@ -43,24 +43,22 @@ const CreateCourse = (props) => {
     }
 
      //Handle errors display
-     const ErrorsDisplay = ({ errors }) => {
-        let errorsDisplay = null;
-      
-        if (errors.length) {
-          errorsDisplay = (
-            <div>
-              <h2 className="validation--errors--label">Validation errors</h2>
-              <div className="validation-errors">
-                <ul>
-                  {errors.map((error, i) => <li key={i}>{error}</li>)}
-                </ul>
-              </div>
-            </div>
-          );
-        }
-      
-        return errorsDisplay;
-      }
+  const ErrorsDisplay = ({ errors }) => {
+    let errorsDisplay = null;
+  
+    if (errors.length) {
+      errorsDisplay = (
+        <div>
+          <h2 className="validation--errors--label">Validation errors</h2>
+            <ul className="validation-errors">
+              {errors.map((error, i) => <li key={i}>{error}</li>)}
+            </ul>
+        </div>
+      );
+    }
+  
+    return errorsDisplay;
+  }
 
     //Function to handle cancel
     const handleCancel = (e) => {
@@ -79,7 +77,7 @@ const CreateCourse = (props) => {
     context.data.createCourse(course, authUser.emailAddress, password)
     .then( errors => {
       if (errors.length) {
-        setErrors({errors})
+        setErrors(errors)
       } else {
         history.push('/');
       }

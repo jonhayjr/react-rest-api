@@ -48,8 +48,12 @@ const UserSignUp = (props) => {
     const user = {firstName, lastName, emailAddress, password};
     context.data.createUser(user)
     .then( errors => {
-      if (errors.length) {
-        setErrors({errors})
+      if (errors.length || password !== confirmedPassword) {
+        //Checks to see if password matches confirmed password and throws error is they don't
+        if (password !== confirmedPassword) {
+          errors.push('Both passwords must match.')
+        }
+        setErrors(errors);
       } else {
         //if sign up is successful, user is logged in
         context.actions.signIn(emailAddress, password)
@@ -72,11 +76,9 @@ const UserSignUp = (props) => {
       errorsDisplay = (
         <div>
           <h2 className="validation--errors--label">Validation errors</h2>
-          <div className="validation-errors">
-            <ul>
+            <ul className="validation-errors">
               {errors.map((error, i) => <li key={i}>{error}</li>)}
             </ul>
-          </div>
         </div>
       );
     }
