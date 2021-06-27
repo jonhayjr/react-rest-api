@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import ReactMarkdown from 'react-markdown';
-import { NavLink, useHistory, Redirect } from 'react-router-dom';
+import { NavLink, useHistory} from 'react-router-dom';
 
 //Import axios 
 import axios from 'axios';
@@ -10,7 +10,6 @@ const CourseDetail = (props) => {
        const [course, setCourse] = useState([]);
        const [userFirstName, setUserFirstName] = useState('');
        const [userLastName, setUserLastName] = useState('');
-       const [errors, setErrors] = useState([]);
        const [isLoading, setIsLoading] = useState(true);
 
         //Context Variable
@@ -41,11 +40,20 @@ const CourseDetail = (props) => {
 
             //Store course user lastName
             setUserLastName(res.data.User.lastName);
-        })
-        .finally(() => {
-            //Set isLoading to False
+            
+            //Set isLoading to false
             setIsLoading(false);
+
         })
+        .catch(err => {
+            //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
+            if (err.response.status === 404) {
+                history.push('/notfound')
+            } else {
+                history.push('/error')
+            }
+        })
+
        }
        
        //Gets data on page render
@@ -60,7 +68,7 @@ const CourseDetail = (props) => {
             context.data.deleteCourse(course.id, authUser.emailAddress, password)
             .then( errors => {
             if (errors.length) {
-                setErrors({errors})
+                console.log(errors);
             } else {
                 history.push('/');
             }

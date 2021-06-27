@@ -9,6 +9,9 @@ import CreateCourse from './components/CreateCourse'
 import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
+import Forbidden from './components/Forbidden';
+import NotFound from './components/NotFound';
+import Error from './components/Error';
 
 import {withContext,Context} from './Context';
 import PrivateRoute from './PrivateRoute';
@@ -34,6 +37,9 @@ const App = () => {
             <Route path="/signin" component={UserSignInWithContext} />
             <Route path="/signup" component={UserSignUpWithContext} />
             <Route path="/signout" component={UserSignOutWithContext} />
+            <Route path="/forbidden" component={Forbidden}/>
+            <Route path="/notfound" component={NotFound}/>
+            <Route path="/error" component={Error}/>
         </Switch>
       </BrowserRouter>
     </div>

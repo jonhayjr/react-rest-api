@@ -58,7 +58,7 @@ const UserSignUp = (props) => {
         //if sign up is successful, user is logged in
         context.actions.signIn(emailAddress, password)
           .then(() => {
-            history.push('/');    
+            history.push(from);    
           });
       }
     })

@@ -15,7 +15,6 @@ const UpdateCourse = (props) => {
 
     const history = useHistory();
 
-
      //Context Variable
      const {context} = props;
 
@@ -47,10 +46,17 @@ const UpdateCourse = (props) => {
 
            //Set Materials Needed State   
            setMaterialsNeeded(res.data.materialsNeeded);
+
+           //Set isLoading to False
+           setIsLoading(false);
         })
-        .finally(() => {
-            //Set isLoading to False
-            setIsLoading(false);
+        .catch(err => {
+            //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
+            if (err.response.status === 404) {
+                history.push('/notfound')
+            } else {
+                history.push('/error')
+            }
         })
        }
 
@@ -94,6 +100,8 @@ const UpdateCourse = (props) => {
         .then( errors => {
         if (errors.length) {
             setErrors(errors)
+        } else if (authUserId !== course.userId) {
+            history.push('/forbidden');
         } else {
             history.push('/');
         }
