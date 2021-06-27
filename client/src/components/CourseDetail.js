@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import ReactMarkdown from 'react-markdown';
 import { NavLink, useHistory, Redirect } from 'react-router-dom';
 
 //Import axios 
@@ -71,21 +72,7 @@ const CourseDetail = (props) => {
 
        }
 
-       //Parse description element and create separate paragraphs
-       const description = course.description 
-                ? course.description.split(/\r?\n/)
-                    .filter(desc => desc !== '')
-                    .map((desc, index) => <p key={index}>{desc}</p>)
-                : '';
-       
-       //Parse materialsNeeded and created separate list items
-       const materialsNeeded =   course.materialsNeeded
-       ? course.materialsNeeded.split(/\r?\n/)
-           .filter(material => material !== '')
-           .map((material, index) => <li key={index}>{material.replaceAll('* ', '')}</li>)
-       : '';
-
-
+     
     return (
         <div className="wrap">
             <h2>Course Detail</h2>
@@ -113,9 +100,9 @@ const CourseDetail = (props) => {
                     
                             <p>By {userFirstName} {userLastName}</p>
     
-                            { 
-                                description
-                            }
+                            
+                            <ReactMarkdown>{course.description}</ReactMarkdown>
+                        
                         </div>
                         <div>
                             <h3 className="course--detail--title">Estimated Time</h3>
@@ -123,9 +110,7 @@ const CourseDetail = (props) => {
 
                             <h3 className="course--detail--title">Materials Needed</h3>
                                 <ul className="course--detail--list">
-                                    {
-                                        materialsNeeded
-                                    }
+                                    <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
                                 </ul>
                         </div>
                     </div>
