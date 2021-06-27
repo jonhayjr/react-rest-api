@@ -10,9 +10,21 @@ const UpdateCourse = (props) => {
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
+    const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const history = useHistory();
+
+
+     //Context Variable
+     const {context} = props;
+
+    //Get Authenticated User
+    const authUser = context.authenticatedUser;
+    //Get User Password
+    const password = context.unhashedPassword;
+    //Get Authenticated User ID
+    const authUserId = authUser ? authUser.id : null;
 
     //Function to grab API data
     const getCourse = (id) => {
@@ -52,8 +64,8 @@ const UpdateCourse = (props) => {
     const cancelUpdate = (e) => {
         //prevents default form behavior
         e.preventDefault();
-        //redirects to index route
-        history.push('/');
+        //redirects to course detail
+        history.push(`/courses/${course.id}`);
     }
 
     //Handle change input
@@ -73,6 +85,26 @@ const UpdateCourse = (props) => {
         }
       }
 
+       //Handles course update
+       const updateCourse = (e) => {
+        e.preventDefault();
+        const updatedCourse = {title, description, estimatedTime, materialsNeeded};
+
+        context.data.updateCourse(course.id, updatedCourse, authUser.emailAddress, password)
+        .then( errors => {
+        if (errors.length) {
+            setErrors({errors})
+        } else {
+            history.push('/');
+        }
+        })
+        .catch((err) => {
+        console.log(err);
+        history.push('/error');
+        });
+
+   }
+
     return (
              <div className="wrap">
                 <h2>Update Course</h2>
@@ -80,7 +112,7 @@ const UpdateCourse = (props) => {
                 isLoading
                 ? <p>Loading...</p>
                 :
-                (<form>
+                (<form onSubmit={updateCourse}>
                     <div className="main--flex">
                         <div>
                             <label htmlFor="courseTitle">Course Title</label>
