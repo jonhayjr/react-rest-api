@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import { useHistory} from 'react-router-dom';
 
 //Import axios 
@@ -13,6 +13,8 @@ const UpdateCourse = (props) => {
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const previousId = useRef(props.match.params.id);
+
     const history = useHistory();
 
      //Context Variable
@@ -25,46 +27,45 @@ const UpdateCourse = (props) => {
     //Get Authenticated User ID
     const authUserId = authUser ? authUser.id : null;
 
-    //Function to grab API data
-    const getCourse = (id) => {
-        //Set isLoading to true
-        setIsLoading(true);
-       //Gets data from courses api
-         axios.get(`http://localhost:5000/api/courses/${id}`)
-         .then(res => {
-           //Store course in state
-           setCourse(res.data);
-
-           //Set Title State
-           setTitle(res.data.title);
-
-           //Set Description State
-           setDescription(res.data.description);
-
-           //Set Estimated Time State   
-           setEstimatedTime(res.data.estimatedTime);
-
-           //Set Materials Needed State   
-           setMaterialsNeeded(res.data.materialsNeeded);
-
-           //Set isLoading to False
-           setIsLoading(false);
-        })
-        .catch(err => {
-            //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
-            if (err.response.status === 404) {
-                history.push('/notfound')
-            } else {
-                history.push('/error')
-            }
-        })
-       }
 
     //Gets data on page render
     useEffect(() => {
-        //Get course data based on id
-        getCourse(props.match.params.id);
-    }, [props.match.params.id])
+        //Get current id from params
+        const id = props.match.params.id;
+        if (previousId !== id) {
+        //Set isLoading to true
+         setIsLoading(true);
+        //Gets data from courses api
+          axios.get(`http://localhost:5000/api/courses/${id}`)
+          .then(res => {
+            //Store course in state
+            setCourse(res.data);
+ 
+            //Set Title State
+            setTitle(res.data.title);
+ 
+            //Set Description State
+            setDescription(res.data.description);
+ 
+            //Set Estimated Time State   
+            setEstimatedTime(res.data.estimatedTime);
+ 
+            //Set Materials Needed State   
+            setMaterialsNeeded(res.data.materialsNeeded);
+ 
+            //Set isLoading to False
+            setIsLoading(false);
+         })
+         .catch(err => {
+             //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
+             if (err.response.status === 404) {
+                 history.push('/notfound')
+             } else {
+                 history.push('/error')
+             }
+         })
+        }
+    }, [props.match.params.id, history])
 
     //Function that is used to cancel update
     const cancelUpdate = (e) => {

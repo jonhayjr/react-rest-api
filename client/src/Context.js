@@ -75,4 +75,8 @@ export const Consumer = Context.Consumer;
   }
 }
 
-export default {withContext, Context}
+const ContextObject = {
+  withContext,
+  Context
+}
+export default ContextObject

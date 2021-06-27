@@ -1,8 +1,6 @@
 import {useState} from 'react';
 import { useHistory, NavLink } from 'react-router-dom';
 
-import axios from 'axios';
-
 const UserSignUp = (props) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');

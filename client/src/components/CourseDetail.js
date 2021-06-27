@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import ReactMarkdown from 'react-markdown';
 import { NavLink, useHistory} from 'react-router-dom';
 
@@ -12,6 +12,8 @@ const CourseDetail = (props) => {
        const [userLastName, setUserLastName] = useState('');
        const [isLoading, setIsLoading] = useState(true);
 
+       const previousId = useRef(props.match.params.id);
+
         //Context Variable
         const {context} = props;
 
@@ -24,43 +26,43 @@ const CourseDetail = (props) => {
         //Get Authenticated User ID
         const authUserId = authUser ? authUser.id : null;
    
-
-       //Function to grab API data
-       const getCourse = (id) => {
-        //Set isLoading to true
-        setIsLoading(true);
-       //Gets data from courses api
-         axios.get(`http://localhost:5000/api/courses/${id}`)
-         .then(res => {
-           //Store course in state
-           setCourse(res.data);
-
-           //Store course user firstName
-           setUserFirstName(res.data.User.firstName);
-
-            //Store course user lastName
-            setUserLastName(res.data.User.lastName);
-            
-            //Set isLoading to false
-            setIsLoading(false);
-
-        })
-        .catch(err => {
-            //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
-            if (err.response.status === 404) {
-                history.push('/notfound')
-            } else {
-                history.push('/error')
-            }
-        })
-
-       }
        
        //Gets data on page render
        useEffect(() => {
-        //Get course data based on id
-         getCourse(props.match.params.id);
-       }, [props.match.params.id])
+        //Get current id from url parameters
+        const id = props.match.params.id;
+
+        //If previous id doesn't equal the current id, new data is fetched
+        if (previousId !== id) {
+        //Set isLoading to true
+        setIsLoading(true);
+        //Gets data from courses api
+          axios.get(`http://localhost:5000/api/courses/${id}`)
+          .then(res => {
+            //Store course in state
+            setCourse(res.data);
+ 
+            //Store course user firstName
+            setUserFirstName(res.data.User.firstName);
+ 
+             //Store course user lastName
+             setUserLastName(res.data.User.lastName);
+             
+             //Set isLoading to false
+             setIsLoading(false);
+ 
+         })
+         .catch(err => {
+             //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
+             if (err.response.status === 404) {
+                 history.push('/notfound')
+             } else {
+                 history.push('/error')
+             }
+         })
+        }
+      
+       }, [props.match.params.id, history])
 
        //Handles course deletion
        const deleteCourse = () => {

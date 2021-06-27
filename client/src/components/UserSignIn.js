@@ -26,7 +26,7 @@ const UserSignIn = (props) => {
     e.preventDefault();
     const {context} = props;
     const { from } = props.location.state || { from: { pathname: '/' } };
-    console.log(props.location.state)
+  
     context.actions.signIn(emailAddress, password)
       .then((user) => {
         if (user === null) {
