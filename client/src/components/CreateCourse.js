@@ -16,6 +16,8 @@ const CreateCourse = (props) => {
 
      //Get Authenticated User
     const authUser = context.authenticatedUser;
+    //Get password
+    const password = context.unhashedPassword;
      //Get Authenticated User First Name
     const firstName = authUser ? authUser.firstName : '';
     //Get Authenticated User Last Name
@@ -74,7 +76,7 @@ const CreateCourse = (props) => {
     const course = {title, description, estimatedTime, materialsNeeded, userId};
 
     
-    context.data.createCourse(course, authUser.emailAddress, authUser.password)
+    context.data.createCourse(course, authUser.emailAddress, password)
     .then( errors => {
       if (errors.length) {
         setErrors({errors})

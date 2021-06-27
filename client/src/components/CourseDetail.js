@@ -19,6 +19,8 @@ const CourseDetail = (props) => {
 
         //Get Authenticated User
         const authUser = context.authenticatedUser;
+        //Get User Password
+        const password = context.unhashedPassword;
         //Get Authenticated User ID
         const authUserId = authUser ? authUser.id : null;
    
@@ -54,7 +56,7 @@ const CourseDetail = (props) => {
        //Handles course deletion
        const deleteCourse = () => {
             
-            context.data.deleteCourse(course.id, authUser.emailAddress, authUser.password)
+            context.data.deleteCourse(course.id, authUser.emailAddress, password)
             .then( errors => {
             if (errors.length) {
                 setErrors({errors})
