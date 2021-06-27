@@ -43,7 +43,7 @@ const Courses = () => {
 
     return (
         <div className="wrap main--grid">
-        {isLoading 
+        {isLoading
         ? (<p>Loading...</p>)
         :
         <>
