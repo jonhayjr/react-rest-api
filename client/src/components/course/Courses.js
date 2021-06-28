@@ -1,35 +1,37 @@
 import {useEffect, useState} from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
-//Import axios 
-import axios from 'axios';
-
-const Courses = () => {
+const Courses = (props) => {
     //Create State
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    //Function to grab API data
-    const getCourses = () => {
-    //Set isLoading state to true
-    setIsLoading(true);
+    //Get Context
+    const {context} = props;
 
-    //Gets data from courses api
-      axios.get('http://localhost:5000/api/courses')
-      .then(res => {
-        //Stores data in state
-        setCourses(res.data);
-    })
-      .finally(() => {
-        //Set isLoading to false
-        setIsLoading(false);
-      })
-    }
-    
+    //Create history variable 
+    const history = useHistory();
+
     //Gets course data on page render
     useEffect(() => {
-      getCourses();
-    }, [])
+
+     //Set isLoading state to true
+     setIsLoading(true);
+
+     //Calls getCourses function from context
+     context.data.getCourses()
+     .then(res => {     
+       setCourses(res);
+     })
+     .catch((err) => {
+       console.log(err);
+       history.push('/error');
+     })
+
+     //Set isLoading to false
+     setIsLoading(false);
+    
+    }, [context.data, history])
 
     //Create courses links
     const courseLinks = courses 

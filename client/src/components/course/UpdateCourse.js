@@ -1,9 +1,6 @@
 import {useEffect, useState, useRef} from 'react';
 import { useHistory} from 'react-router-dom';
 
-//Import axios 
-import axios from 'axios';
-
 const UpdateCourse = (props) => {
     //Creates state
     const [course, setCourse] = useState([]);
@@ -38,37 +35,42 @@ const UpdateCourse = (props) => {
         if (previousId !== id) {
         //Set isLoading to true
          setIsLoading(true);
-        //Gets data from courses api
-          axios.get(`http://localhost:5000/api/courses/${id}`)
+
+        //Call getCourse function from Context
+        context.data.getCourse(id)
           .then(res => {
+         //If authenticated user isn't course owner, send to forbidden route
+          if (res !== undefined && authUserId !== res.userId) {
+            history.push('/forbidden');
+        //If there is response data, and authenticated user is course owner, store data in state
+        } else if (res !== undefined && authUserId === res.userId) {
             //Store course in state
-            setCourse(res.data);
+            setCourse(res);
  
             //Set Title State
-            setTitle(res.data.title);
+            setTitle(res.title);
  
             //Set Description State
-            setDescription(res.data.description);
+            setDescription(res.description);
  
             //Set Estimated Time State   
-            setEstimatedTime(res.data.estimatedTime);
+            setEstimatedTime(res.estimatedTime);
  
             //Set Materials Needed State   
-            setMaterialsNeeded(res.data.materialsNeeded);
+            setMaterialsNeeded(res.materialsNeeded);
  
             //Set isLoading to False
             setIsLoading(false);
+          } else {
+            history.push('/notfound')
+          }
          })
          .catch(err => {
-             //If error status is 404, redirect to /notfound route.  Redirect all errors to error page.
-             if (err.response.status === 404) {
-                 history.push('/notfound')
-             } else {
-                 history.push('/error')
-             }
+            console.log(err);
+            history.push('/error');
          })
         }
-    }, [props.match.params.id, history])
+    }, [props.match.params.id, history, context.data, authUserId])
 
     //Function that is used to cancel update
     const cancelUpdate = (e) => {
@@ -106,16 +108,13 @@ const UpdateCourse = (props) => {
         .then( errors => {
         if (errors.length) {
             setErrors(errors)
-        //If authorized user doesn't match course user, redirects to /forbidden route
-        } else if (authUserId !== course.userId) {
-            history.push('/forbidden');
         } else {
             history.push('/');
         }
         })
         .catch((err) => {
-        console.log(err);
-        history.push('/error');
+            console.log(err);
+            history.push('/error');
         });
 
    }

@@ -2,8 +2,6 @@ import {useEffect, useState, useRef} from 'react';
 import ReactMarkdown from 'react-markdown';
 import { NavLink, useHistory} from 'react-router-dom';
 
-//Import axios 
-import axios from 'axios';
 
 const CourseDetail = (props) => {
        //Creates state
@@ -36,35 +34,36 @@ const CourseDetail = (props) => {
 
         //If previous id doesn't equal the current id, new data is fetched
         if (previousId !== id) {
+            
         //Set isLoading to true
         setIsLoading(true);
-        //Gets data from courses api
-          axios.get(`http://localhost:5000/api/courses/${id}`)
+        //Call getCourse function from Context
+          context.data.getCourse(id)
           .then(res => {
-            //Store course in state
-            setCourse(res.data);
- 
-            //Store course user firstName
-            setUserFirstName(res.data.User.firstName);
- 
-             //Store course user lastName
-             setUserLastName(res.data.User.lastName);
-             
-             //Set isLoading to false
-             setIsLoading(false);
- 
+            //If response is not defined, store in state.  In all other circumstances, send to notfound route
+            if (res !== undefined) {
+                //Store course in state
+                setCourse(res);
+
+                //Store course user firstName
+                setUserFirstName(res.User.firstName);
+    
+                //Store course user lastName
+                setUserLastName(res.User.lastName);
+                
+                //Set isLoading to false
+                setIsLoading(false);
+            } else {
+                history.push('/notfound')
+            }
          })
          .catch(err => {
-             //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
-             if (err.response.status === 404) {
-                 history.push('/notfound')
-             } else {
-                 history.push('/error')
-             }
+            console.log(err);
+            history.push('/error');
          })
         }
       
-       }, [props.match.params.id, history])
+       }, [props.match.params.id, history, context.data])
 
        //Handles course deletion
        const deleteCourse = () => {
