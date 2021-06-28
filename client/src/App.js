@@ -13,9 +13,10 @@ import Forbidden from './components/Forbidden';
 import NotFound from './components/NotFound';
 import UnhandledError from './components/UnhandledError';
 
-import {withContext,Context} from './Context';
+import {withContext} from './Context';
 import PrivateRoute from './PrivateRoute';
 
+const HeaderWithContext = withContext(Header);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
 const UserSignUpWithContext = withContext(UserSignUp);
@@ -26,7 +27,7 @@ const UpdateCourseWithContext = withContext(UpdateCourse);
 const App = () => {
   return (
     <div>
-      <Header context={Context}/>
+      <HeaderWithContext />
       <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Courses}/>

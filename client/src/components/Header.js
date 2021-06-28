@@ -1,9 +1,7 @@
-import {useContext} from 'react';
-import Context from '../Context'
-
-
-const Header = () => {
-    const context = useContext(Context.Context);
+const Header = (props) => {
+    //Get context from props
+    const {context} = props;
+    //Get Authenticated user from context
     const authUser = context.authenticatedUser;
   
     return (
@@ -14,7 +12,7 @@ const Header = () => {
                     authUser
                     ? <nav>
                         <ul className="header--signedout">
-                            <li><span>Welcome, {authUser.firstName}!</span></li>
+                            <li><span>Welcome, {authUser.firstName} {authUser.lastName}!</span></li>
                             <li><a href="/signout">Sign Out</a></li>
                         </ul>
                       </nav>
