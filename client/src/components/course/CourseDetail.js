@@ -6,17 +6,19 @@ import { NavLink, useHistory} from 'react-router-dom';
 import axios from 'axios';
 
 const CourseDetail = (props) => {
-       //Create State
+       //Creates state
        const [course, setCourse] = useState([]);
        const [userFirstName, setUserFirstName] = useState('');
        const [userLastName, setUserLastName] = useState('');
        const [isLoading, setIsLoading] = useState(true);
-
+    
+       //Stores previous course id
        const previousId = useRef(props.match.params.id);
 
         //Context Variable
         const {context} = props;
 
+        //History variable
         const history = useHistory();
 
         //Get Authenticated User

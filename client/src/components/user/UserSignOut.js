@@ -6,7 +6,7 @@ const UserSignOut = ({context}) => {
 
     //Triggered on page render
     useEffect(() => {
-        //Sign Out User
+        //Signs Out User
         context.actions.signOut()
         //Change to index url
         history.push('/');

@@ -34,9 +34,10 @@ export class Provider extends Component {
     );
   }
 
-  
+  //Function that signs in user
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
+    //If user sign in is successful, store authenticatedUser and unhashedPassword in state
     if (user !== null) {
       this.setState(() => {
         return {
@@ -44,14 +45,18 @@ export class Provider extends Component {
           unhashedPassword: password
         };
       });
+      //Stores authenticatedUser and unhashedPassword in cookies.  Cookies expire in 1 day.
       Cookies.set('authenticatedUser', JSON.stringify(user), {expires: 1});
       Cookies.set('unhashedPassword', JSON.stringify(password), {expires: 1});
     }
     return user;
   }
 
+  //Function that signs out user
   signOut = () => {
+    //Removes authenticatedUser and unhashedPassword from state.  
     this.setState({ authenticatedUser: null, unhashedPassword: null });
+    //Removes cookies
     Cookies.remove('authenticatedUser');
     Cookies.remove('unhashedPassword');
   }

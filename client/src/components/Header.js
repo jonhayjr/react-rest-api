@@ -8,7 +8,8 @@ const Header = (props) => {
         <header>
             <div className="wrap header--flex">
                 <h1 className="header--logo"><a href="/">Courses</a></h1>
-                {
+                {/*If there is an authenticated user, a welcome message and sign out button appear.  In all other scenarios, sign up and sign out buttons appear */}
+                {   
                     authUser
                     ? <nav>
                         <ul className="header--signedout">

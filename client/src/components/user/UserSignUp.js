@@ -2,13 +2,15 @@ import {useState} from 'react';
 import { useHistory, NavLink } from 'react-router-dom';
 
 const UserSignUp = (props) => {
+    //Create state
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [errors, setErrors] = useState([]);
-  
+
+    //Create history variable
     const history = useHistory();
 
     //Function to handle change to input
@@ -16,6 +18,7 @@ const UserSignUp = (props) => {
     const name = event.target.name;
     const value = event.target.value;
 
+    //Checks to see which input field was changed and adds to state
     if (name === 'firstName') {
         setFirstName(value);
     } else if (name === 'lastName'){
@@ -31,19 +34,25 @@ const UserSignUp = (props) => {
 
   //Function to handle form cancel
   const handleCancel = (e) => {
-    e.preventDefault();
+    //Redirects to index route
       history.push('/');
     }
 
 //Function to handle submitted form
   const handleSubmit = (e) => {
+    //Prevents default behavior on form submit
     e.preventDefault();
 
+    //Gets context from props
     const {context} = props;
+
+    //Sets from object that is used for redirect after sign in
     const { from } = props.location.state || { from: { pathname: '/' } };
 
     //Creates user object
     const user = {firstName, lastName, emailAddress, password};
+
+    //Calls createUser function from context
     context.data.createUser(user)
     .then( errors => {
       if (errors.length || password !== confirmedPassword) {

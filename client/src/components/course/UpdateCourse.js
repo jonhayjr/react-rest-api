@@ -5,6 +5,7 @@ import { useHistory} from 'react-router-dom';
 import axios from 'axios';
 
 const UpdateCourse = (props) => {
+    //Creates state
     const [course, setCourse] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -13,8 +14,10 @@ const UpdateCourse = (props) => {
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    //Stores previous course id
     const previousId = useRef(props.match.params.id);
 
+    //Creates history variable
     const history = useHistory();
 
      //Context Variable
@@ -57,7 +60,7 @@ const UpdateCourse = (props) => {
             setIsLoading(false);
          })
          .catch(err => {
-             //If error status is 404, redirect to notfound route.  Redirect all errors to error page.
+             //If error status is 404, redirect to /notfound route.  Redirect all errors to error page.
              if (err.response.status === 404) {
                  history.push('/notfound')
              } else {
@@ -69,13 +72,11 @@ const UpdateCourse = (props) => {
 
     //Function that is used to cancel update
     const cancelUpdate = (e) => {
-        //prevents default form behavior
-        e.preventDefault();
         //redirects to course detail
         history.push(`/courses/${course.id}`);
     }
 
-    //Handle change input
+    //Handle change to input
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -94,13 +95,18 @@ const UpdateCourse = (props) => {
 
        //Handles course update
        const updateCourse = (e) => {
+        //Prevents default form behaviour
         e.preventDefault();
+
+        //Stores update course data in object
         const updatedCourse = {title, description, estimatedTime, materialsNeeded};
 
+        //Calls updateCourse function from Context
         context.data.updateCourse(course.id, updatedCourse, authUser.emailAddress, password)
         .then( errors => {
         if (errors.length) {
             setErrors(errors)
+        //If authorized user doesn't match course user, redirects to /forbidden route
         } else if (authUserId !== course.userId) {
             history.push('/forbidden');
         } else {

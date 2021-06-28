@@ -2,13 +2,14 @@ import {useState} from 'react';
 import { useHistory} from 'react-router-dom';
 
 const CreateCourse = (props) => {
-
+    //Create state
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState('');
 
+    //Create history variable
     const history = useHistory();
 
     //Context Variable
@@ -25,7 +26,7 @@ const CreateCourse = (props) => {
     //Get Authenticated User ID
     const userId = authUser ? authUser.id : null;
 
-    //Handle change input
+    //Handle change to input
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -42,7 +43,7 @@ const CreateCourse = (props) => {
         }
     }
 
-     //Handle errors display
+  //Handle errors display
   const ErrorsDisplay = ({ errors }) => {
     let errorsDisplay = null;
   
@@ -73,7 +74,7 @@ const CreateCourse = (props) => {
     //Creates user object
     const course = {title, description, estimatedTime, materialsNeeded, userId};
 
-    
+    //Calls createCourse function from context
     context.data.createCourse(course, authUser.emailAddress, password)
     .then( errors => {
       if (errors.length) {

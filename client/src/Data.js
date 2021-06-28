@@ -15,6 +15,7 @@ export default class Data {
       options.body = JSON.stringify(body);
     }
 
+    //If authorization is required, encodes credentials and adds to headers.
     if (requiresAuth) {    
       const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
@@ -22,6 +23,7 @@ export default class Data {
     return fetch(url, options);
   }
 
+  //Function that gets user from API using GET method
   async getUser(emailAddress, password) {
     const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password });
 
@@ -36,6 +38,7 @@ export default class Data {
     }
   }
   
+  //Function that creates user using API POST method
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
@@ -51,6 +54,7 @@ export default class Data {
     }
   }
 
+  //Function that creates course using API POST method
   async createCourse(course, emailAddress, password) {
     
     const response = await this.api('/courses', 'POST', course, true, { emailAddress, password });
@@ -67,6 +71,7 @@ export default class Data {
     }
   }
 
+  //Function that updates course using API PUT method
   async updateCourse(courseId, course, emailAddress, password) {
     const response = await this.api(`/courses/${courseId}`, 'PUT', course, true, { emailAddress, password });
     if (response.status === 204) {
@@ -82,6 +87,7 @@ export default class Data {
     }
   }
 
+//Function that deletes course using API DELETE method
 async deleteCourse(courseId, emailAddress, password) {
   const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, { emailAddress, password });
   if (response.status === 204) {

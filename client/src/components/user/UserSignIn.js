@@ -3,12 +3,12 @@ import { useHistory, NavLink } from 'react-router-dom';
 
 const UserSignIn = (props) => {
 
-  //Set state for emailAddress, password and errors
+  //Creates state for emailAddress, password and errors
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
-  //Initialize history variable using useHistory
+  //Create history variable
   const history = useHistory();
 
   //Function to handle change to input
@@ -35,7 +35,7 @@ const UserSignIn = (props) => {
     //Previous location before redirect or index route
     const { from } = props.location.state || { from: { pathname: '/' } };
     
-    //
+    //Calls Sign In function from Context
     context.actions.signIn(emailAddress, password)
       .then((user) => {
         if (user === null) {
@@ -48,12 +48,12 @@ const UserSignIn = (props) => {
       })
       .catch((error) => {
         console.error(error);
-        //If error is caught, redirect user to errors route
+        //If error is caught, redirect user to /error route
         history.push('/error');
       });
   }
 
-  //Function to handle form cancel
+  //Function to handle cancel
   const handleCancel = (e) => {
     //Redirect to index route 
       history.push('/');

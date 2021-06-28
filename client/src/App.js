@@ -1,21 +1,25 @@
 import { Switch, Route, BrowserRouter} from 'react-router-dom';
 
-//Import components
+//Imports components
 import Header from './components/Header';
-import Courses from './components/Courses';
-import CourseDetail from './components/CourseDetail';
-import UpdateCourse from './components/UpdateCourse';
-import CreateCourse from './components/CreateCourse'
-import UserSignUp from './components/UserSignUp';
-import UserSignIn from './components/UserSignIn';
-import UserSignOut from './components/UserSignOut';
-import Forbidden from './components/Forbidden';
-import NotFound from './components/NotFound';
-import UnhandledError from './components/UnhandledError';
+import Courses from './components/course/Courses';
+import CourseDetail from './components/course/CourseDetail';
+import UpdateCourse from './components/course/UpdateCourse';
+import CreateCourse from './components/course/CreateCourse'
+import UserSignUp from './components/user/UserSignUp';
+import UserSignIn from './components/user/UserSignIn';
+import UserSignOut from './components/user/UserSignOut';
+import Forbidden from './components/error/Forbidden';
+import NotFound from './components/error/NotFound';
+import UnhandledError from './components/error/UnhandledError';
 
+//Imports withContext function from Context
 import {withContext} from './Context';
+
+//Imports private route script
 import PrivateRoute from './PrivateRoute';
 
+//Create withContext components
 const HeaderWithContext = withContext(Header);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
