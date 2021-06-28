@@ -28,7 +28,7 @@ const UserSignIn = (props) => {
   const handleSubmit = (e) => {
     //Prevent default form behavior
     e.preventDefault();
-    
+
     //Grab context from props and store in variable
     const {context} = props;
 

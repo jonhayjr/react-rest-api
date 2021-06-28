@@ -120,9 +120,9 @@ const UpdateCourse = (props) => {
   
     if (errors.length) {
       errorsDisplay = (
-        <div>
-          <h2 className="validation--errors--label">Validation errors</h2>
-            <ul className="validation-errors">
+        <div className="validation--errors">
+          <h3>Validation errors</h3>
+            <ul>
               {errors.map((error, i) => <li key={i}>{error}</li>)}
             </ul>
         </div>

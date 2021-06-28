@@ -204,17 +204,6 @@ input:focus, button:focus, .button:focus, textarea:focus {
     outline: 2px solid #332a40;
 }
 
-/* styles the validation errors */
-.validation--errors--label {
-    color: #7c689b;
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-  .validation-errors {
-    color: #7c689b;
-    padding: 15px 0 40px 10px;
-  }
-
 @media screen and (min-width: 600px) {
     .header--signedin li {
         display: inline-block;
