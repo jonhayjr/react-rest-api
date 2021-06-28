@@ -65,13 +65,12 @@ const UserSignIn = (props) => {
     
       if (errors.length) {
         errorsDisplay = (
-          <div>
-            <div className="validation-errors">
+            <div className="validation--errors">
+            <h3>Sign-in Error</h3>
               <ul>
                 {errors.map((error, i) => <li key={i}>{error}</li>)}
               </ul>
             </div>
-          </div>
         );
       }
     
