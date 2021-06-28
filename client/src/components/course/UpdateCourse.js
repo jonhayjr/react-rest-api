@@ -74,6 +74,8 @@ const UpdateCourse = (props) => {
 
     //Function that is used to cancel update
     const cancelUpdate = (e) => {
+        //Prevent Default form behaviour
+        e.preventDefault();
         //redirects to course detail
         history.push(`/courses/${course.id}`);
     }

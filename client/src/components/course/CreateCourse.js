@@ -63,8 +63,10 @@ const CreateCourse = (props) => {
 
     //Function to handle cancel
     const handleCancel = (e) => {
-        //redirects to index route
-        history.push('/');
+      //Prevent Default form behaviour
+      e.preventDefault();
+      //redirects to index route
+      history.push('/');
     }
 
   //Function to handle submitted form

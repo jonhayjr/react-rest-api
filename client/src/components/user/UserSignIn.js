@@ -55,6 +55,9 @@ const UserSignIn = (props) => {
 
   //Function to handle cancel
   const handleCancel = (e) => {
+    //Prevent Default form behaviour
+    e.preventDefault();
+    
     //Redirect to index route 
       history.push('/');
     }
