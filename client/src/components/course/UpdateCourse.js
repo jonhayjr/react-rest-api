@@ -108,8 +108,7 @@ const UpdateCourse = (props) => {
         //Calls updateCourse function from Context
         context.data.updateCourse(course.id, updatedCourse, authUser.emailAddress, password)
         .then( errors => {
-     
-        if (errors.length) {
+          if (errors.length) {
             setErrors(errors)
         } else {
           //Redirects to course detail page

@@ -67,19 +67,16 @@ const CourseDetail = (props) => {
        }, [props.match.params.id, history, context.data])
 
        //Handles course deletion
-       const deleteCourse = () => {
-            
+       const deleteCourse = (e) => {
+           //Prevent default
+            e.preventDefault();
             context.data.deleteCourse(course.id, authUser.emailAddress, password)
             .then( errors => {
-            if (errors.length) {
-                console.log(errors);
-            } else {
-                history.push('/');
-            }
+               history.push('/');
             })
             .catch((err) => {
-            console.log(err);
-            history.push('/error');
+                console.log(err);
+                history.push('/error');
             });
 
        }
@@ -99,7 +96,7 @@ const CourseDetail = (props) => {
                         ?
                         <>
                             <NavLink className="button" to={`/courses/${course.id}/update`}>Update Course</NavLink>
-                            <a className="button" onClick={deleteCourse} href='/' >Delete Course</a>
+                            <NavLink className="button" onClick={deleteCourse} to='/' >Delete Course</NavLink>
                         </>
                         : ''
                     }
