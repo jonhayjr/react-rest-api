@@ -108,10 +108,12 @@ const UpdateCourse = (props) => {
         //Calls updateCourse function from Context
         context.data.updateCourse(course.id, updatedCourse, authUser.emailAddress, password)
         .then( errors => {
+     
         if (errors.length) {
             setErrors(errors)
         } else {
-            history.push('/');
+          //Redirects to course detail page
+            history.push(`/courses/${course.id}`);
         }
         })
         .catch((err) => {

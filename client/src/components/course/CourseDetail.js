@@ -32,6 +32,7 @@ const CourseDetail = (props) => {
         //Get current id from url parameters
         const id = props.match.params.id;
 
+
         //If previous id doesn't equal the current id, new data is fetched
         if (previousId !== id) {
             

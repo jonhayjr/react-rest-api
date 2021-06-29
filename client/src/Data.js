@@ -108,6 +108,7 @@ export default class Data {
   //Function that updates course using API PUT method
   async updateCourse(courseId, course, emailAddress, password) {
     const response = await this.api(`/courses/${courseId}`, 'PUT', course, true, { emailAddress, password });
+    
     if (response.status === 204) {
       return [];
     }
