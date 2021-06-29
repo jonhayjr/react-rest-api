@@ -75,7 +75,6 @@ const UserSignUp = (props) => {
       }
     })
     .catch((err) => {
-      console.log(err);
       history.push('/error');
     });
   }

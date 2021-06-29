@@ -79,7 +79,6 @@ const CreateCourse = (props) => {
     //Calls createCourse function from context
     context.data.createCourse(course, authUser.emailAddress, password)
     .then( res => {
-      console.log(res.status)
       //If status is 201, route to index page
       if (res.status === 201) {
         history.push('/');
