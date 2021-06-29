@@ -39,34 +39,42 @@ const UpdateCourse = (props) => {
         //Call getCourse function from Context
         context.data.getCourse(id)
           .then(res => {
-         //If authenticated user isn't course owner, send to forbidden route
-          if (res !== undefined && authUserId !== res.userId) {
-            history.push('/forbidden');
-        //If there is response data, and authenticated user is course owner, store data in state
-        } else if (res !== undefined && authUserId === res.userId) {
-            //Store course in state
-            setCourse(res);
- 
-            //Set Title State
-            setTitle(res.title);
- 
-            //Set Description State
-            setDescription(res.description);
- 
-            //Set Estimated Time State   
-            setEstimatedTime(res.estimatedTime);
- 
-            //Set Materials Needed State   
-            setMaterialsNeeded(res.materialsNeeded);
- 
-            //Set isLoading to False
-            setIsLoading(false);
-          } else {
+          if (res.status === 200) {
+            res.json().then(data => {
+              //If authenticated user isn't course owner, send to forbidden route
+              if (authUserId !== data.userId) {
+                history.push('/forbidden');
+              } else {
+
+                  //Store course in state
+                  setCourse(data);
+    
+                  //Set Title State
+                  setTitle(data.title);
+      
+                  //Set Description State
+                  setDescription(data.description);
+      
+                  //Set Estimated Time State   
+                  setEstimatedTime(data.estimatedTime);
+      
+                  //Set Materials Needed State   
+                  setMaterialsNeeded(data.materialsNeeded);
+      
+                  //Set isLoading to False
+                  setIsLoading(false);
+              }
+            })
+            //If response status is 404, send to notfound route
+          } else if (res.status === 404) {
             history.push('/notfound')
+          } else {
+            //Send all other statues to error route
+            history.push('/error')
           }
+       
          })
          .catch(err => {
-            console.log(err);
             history.push('/error');
          })
         }
@@ -107,16 +115,22 @@ const UpdateCourse = (props) => {
 
         //Calls updateCourse function from Context
         context.data.updateCourse(course.id, updatedCourse, authUser.emailAddress, password)
-        .then( errors => {
-          if (errors.length) {
-            setErrors(errors)
-        } else {
-          //Redirects to course detail page
+        .then( res => {
+          //If status is 204, send user to course detail page
+          if (res.status === 204) {
+            //Redirects to course detail page
             history.push(`/courses/${course.id}`);
-        }
+            //if status is 400, set errors in state
+          } else if (res.status === 400) {
+            res.json().then(errors => {
+              setErrors(errors.errors);
+            })
+            //Send all other statuses to error route
+          } else {
+            history.push('/');
+          }
         })
         .catch((err) => {
-            console.log(err);
             history.push('/error');
         });
 

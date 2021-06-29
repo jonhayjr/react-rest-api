@@ -40,26 +40,31 @@ const CourseDetail = (props) => {
         setIsLoading(true);
         //Call getCourse function from Context
           context.data.getCourse(id)
-          .then(res => {
-            //If response is not defined, store in state.  In all other circumstances, send to notfound route
-            if (res !== undefined) {
-                //Store course in state
-                setCourse(res);
+          .then((res) => {
+            //If response status is 200, store data in state
+            if (res.status === 200) {
+                res.json().then(data => {
+                    //Store course in state
+                    setCourse(data);
 
-                //Store course user firstName
-                setUserFirstName(res.User.firstName);
-    
-                //Store course user lastName
-                setUserLastName(res.User.lastName);
+                    //Store course user firstName
+                    setUserFirstName(data.User.firstName);
+        
+                    //Store course user lastName
+                    setUserLastName(data.User.lastName);
+                 })
                 
                 //Set isLoading to false
                 setIsLoading(false);
-            } else {
-                history.push('/notfound')
+                //If status is 404, send to notfound route
+            } else if (res.status === 404) {
+                history.push('/notfound');
+                //Send all other statuses to error route
+            } else {  
+                history.push('/error');
             }
          })
          .catch(err => {
-            console.log(err);
             history.push('/error');
          })
         }
@@ -70,12 +75,25 @@ const CourseDetail = (props) => {
        const deleteCourse = (e) => {
            //Prevent default
             e.preventDefault();
+
+            //Call deleteCourse function from context
             context.data.deleteCourse(course.id, authUser.emailAddress, password)
-            .then( errors => {
-               history.push('/');
+            .then( res => {
+                //If status is 204 or delete was successful, send to index route
+                if (res.status === 204) {
+                    history.push('/');
+                //If status is 403, send to forbidden route
+                } else if (res.status === 403) {
+                    history.push('/forbidden')
+                //If status is 404, send to notfound route.
+                } else if (res.status === 404) {
+                    history.push('/notfound')
+                //Send all other statuses to error route
+                } else {  
+                    history.push('/error');
+                }
             })
             .catch((err) => {
-                console.log(err);
                 history.push('/error');
             });
 

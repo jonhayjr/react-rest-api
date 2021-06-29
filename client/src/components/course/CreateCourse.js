@@ -7,7 +7,7 @@ const CreateCourse = (props) => {
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
-    const [errors, setErrors] = useState('');
+    const [errors, setErrors] = useState([]);
 
     //Create history variable
     const history = useHistory();
@@ -78,15 +78,22 @@ const CreateCourse = (props) => {
 
     //Calls createCourse function from context
     context.data.createCourse(course, authUser.emailAddress, password)
-    .then( errors => {
-      if (errors.length) {
-        setErrors(errors)
-      } else {
+    .then( res => {
+      console.log(res.status)
+      //If status is 201, route to index page
+      if (res.status === 201) {
         history.push('/');
+      // If status is 400, set errors in state
+      } else if (res.status === 400) {
+        res.json().then(errors => {
+          setErrors(errors.errors);
+        })
+      //Any other status, redirect to errors route
+      } else {
+        history.push('/errors'); 
       }
     })
     .catch((err) => {
-      console.log(err);
       history.push('/error');
     });
 

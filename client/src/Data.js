@@ -58,86 +58,33 @@ export default class Data {
   //Function that gets courses from API using GET method
   async getCourses() {
     const response = await this.api(`/courses`, 'GET', null, false);
-    
-    if (response.status === 200) {
-      return response.json().then(data => data);
-    }
-    else if (response.status === 400) {
-      return response.json().then(data => {
-        return data.errors;
-      });
-    } else {
-      throw new Error();
-    }
+    return response;
+
   }
 
    //Function that gets course from API using GET method
    async getCourse(id) {
     const response = await this.api(`/courses/${id}`, 'GET', null, false);
-
-    if (response.status === 200) {
-      return response.json().then(data => data);
-    }
-    else if (response.status === 404) {
-      return response.json().then(data => {
-        return data.errors;
-      });
-    } else {
-      throw new Error();
-    }
+    return response;
   }
 
 
   //Function that creates course using API POST method
-  async createCourse(course, emailAddress, password) {
-    
+  async createCourse(course, emailAddress, password) {   
     const response = await this.api('/courses', 'POST', course, true, { emailAddress, password });
-
-    if (response.status === 201) {
-      return [];
-    }
-    else if (response.status === 400) {
-      return response.json().then(data => {
-        return data.errors;
-      });
-    }
-    else {
-      throw new Error();
-    }
+    return response;
   }
 
   //Function that updates course using API PUT method
   async updateCourse(courseId, course, emailAddress, password) {
     const response = await this.api(`/courses/${courseId}`, 'PUT', course, true, { emailAddress, password });
-
-    if (response.status === 204) {
-      return [];
-    }
-    else if (response.status === 400) {
-      return response.json().then(data => {
-        return data.errors;
-      });
-    }
-    else {
-      throw new Error();
-    }
+    return response;
   }
 
 //Function that deletes course using API DELETE method
 async deleteCourse(courseId, emailAddress, password) {
   const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, { emailAddress, password });
-
-  if (response.status === 204) {
-    return [];
-  }
-  else if (response.status === 400) {
-    return response.json().then(data => {
-      return data.errors;
-    });
-  }
-  else {
-    throw new Error();
-  }
+  return response;
 }
 
 }

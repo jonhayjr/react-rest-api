@@ -21,15 +21,21 @@ const Courses = (props) => {
      //Calls getCourses function from context
      context.data.getCourses()
      .then(res => {     
-       setCourses(res);
+       //If response status is 200, store data in state
+       if (res.status === 200) {
+         res.json().then(data => {
+            setCourses(data);
+         })
+          //Set isLoading to false
+          setIsLoading(false);
+       } else {
+         //In all other scenarios, throw error
+         history.push('/error');
+       }
      })
      .catch((err) => {
-       console.log(err);
        history.push('/error');
      })
-
-     //Set isLoading to false
-     setIsLoading(false);
     
     }, [context.data, history])
 
