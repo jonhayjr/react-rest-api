@@ -99,28 +99,29 @@ const CreateCourse = (props) => {
   }  
     return (
         <div className="wrap">
-        <ErrorsDisplay errors={errors} />
-        <form onSubmit={handleSubmit}>
-            <div className="main--flex">
-                <div>
-                    <label htmlFor="courseTitle">Course Title</label>
-                    <input id="courseTitle" name="courseTitle" type="text" value={title} onChange={(e) => {handleChange(e)}}/>
+          <h2>Create Course</h2>
+          <ErrorsDisplay errors={errors} />
+          <form onSubmit={handleSubmit}>
+              <div className="main--flex">
+                  <div>
+                      <label htmlFor="courseTitle">Course Title</label>
+                      <input id="courseTitle" name="courseTitle" type="text" value={title} onChange={(e) => {handleChange(e)}}/>
 
-                    <p>By {firstName} {lastName}</p>
+                      <p>By {firstName} {lastName}</p>
 
-                    <label htmlFor="courseDescription">Course Description</label>
-                    <textarea id="courseDescription" name="courseDescription" value={description} onChange={(e) => {handleChange(e)}}></textarea>
-                </div>
-                <div>
-                    <label htmlFor="estimatedTime">Estimated Time</label>
-                    <input id="estimatedTime" name="estimatedTime" type="text" value={estimatedTime} onChange={(e) => {handleChange(e)}}/>
+                      <label htmlFor="courseDescription">Course Description</label>
+                      <textarea id="courseDescription" name="courseDescription" value={description} onChange={(e) => {handleChange(e)}}></textarea>
+                  </div>
+                  <div>
+                      <label htmlFor="estimatedTime">Estimated Time</label>
+                      <input id="estimatedTime" name="estimatedTime" type="text" value={estimatedTime} onChange={(e) => {handleChange(e)}}/>
 
-                    <label htmlFor="materialsNeeded">Materials Needed</label>
-                    <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={(e) => {handleChange(e)}}></textarea>
-                </div>
-            </div>
-            <button className="button" type="submit">Create Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-        </form>
+                      <label htmlFor="materialsNeeded">Materials Needed</label>
+                      <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={(e) => {handleChange(e)}}></textarea>
+                  </div>
+              </div>
+              <button className="button" type="submit">Create Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+          </form>
     </div>
     )
 }
