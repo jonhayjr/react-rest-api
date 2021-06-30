@@ -9,3 +9,9 @@ This API will provides a way for users to interact with a school database that c
 5. Next, change the directory to the client folder using the command `cd client`.
 6. In this folder, run `npm install` to install the necessary dependencies and then run the command `npm start` to start the app.
 7. The React app will be open up in your browser with [`localhost:3000`](http://localhost:3000/).
+
+## Customizations
+1. Changed color theme to a medium dark red.
+2. Changed font to Roboto.
+3. Added validation on Sign Up to validation password and confirmed password fields and confirm that they match.
+4. Added 'Go Home' link to error components so that user can easily get back to index route.

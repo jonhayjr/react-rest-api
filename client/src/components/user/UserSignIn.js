@@ -47,7 +47,6 @@ const UserSignIn = (props) => {
         }
       })
       .catch((error) => {
-        console.error(error);
         //If error is caught, redirect user to /error route
         history.push('/error');
       });
