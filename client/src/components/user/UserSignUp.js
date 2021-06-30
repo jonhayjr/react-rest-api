@@ -41,6 +41,19 @@ const UserSignUp = (props) => {
       history.push('/');
     }
 
+  //Handles form validation and only submits form is passwords match.
+  const formValidation = (e) => {
+    //Prevent default form behavior
+      e.preventDefault();
+      //If both password don't match, add error message to state
+      if (password !== confirmedPassword) {
+        setErrors(['Both password must match.'])
+      //In all other scenarios, run submit function
+      } else {
+        handleSubmit(e);
+      }
+  }
+ 
 //Function to handle submitted form
   const handleSubmit = (e) => {
     //Prevents default behavior on form submit
@@ -55,34 +68,36 @@ const UserSignUp = (props) => {
     //Creates user object
     const user = {firstName, lastName, emailAddress, password};
 
-    //Calls createUser function from context
-    context.data.createUser(user)
-    .then( err => {
 
-      //Checks to see if password matches confirmed password and if they don't, pushes new error message
-      if (password !== confirmedPassword) {
-        err.push('Both passwords must match.')
-      }
-
-      if (err.length) {
-        setErrors(err);
-      } else {
-        //if sign up is successful, user is logged in
-        context.actions.signIn(emailAddress, password)
-          .then(() => {
-            history.push(from);    
-          });
-      }
-    })
-    .catch((err) => {
-      history.push('/error');
-    });
-  }
+      //Calls createUser function from context
+      context.data.createUser(user)
+      .then( res => {
+        //If status is 201, sign user in.
+        if (res.status === 201) {   
+          //if sign up is successful, user is logged in
+          context.actions.signIn(emailAddress, password)
+            .then(() => {
+              history.push(from);    
+            });
+        //If status is 400, set errors
+        } else if (res.status === 400 ) { 
+          res.json().then(errors => {
+            setErrors(errors.errors);
+          })
+        //All other errors re-route to error page
+        } else {
+          history.push('/error');
+        }
+      })
+      .catch((err) => {
+        history.push('/error');
+      });
+    }
+  
 
   //Handle errors display
-  const ErrorsDisplay = ({ errors }) => {
+  const ErrorsDisplay = ({ errors}) => {
     let errorsDisplay = null;
-  
     if (errors.length) {
       errorsDisplay = (
         <div className="validation--errors">
@@ -101,7 +116,7 @@ const UserSignUp = (props) => {
         <div className="form--centered">
         <h2>Sign Up</h2>
         <ErrorsDisplay errors={errors} />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formValidation}>
             <label htmlFor="firstName">First Name</label>
             <input id="firstName" name="firstName" type="text" value={firstName} onChange={(e) => {handleChange(e)}}/>
             <label htmlFor="lastName">Last Name</label>
