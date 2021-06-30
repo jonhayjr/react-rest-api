@@ -160,7 +160,7 @@ const UpdateCourse = (props) => {
                 <ErrorsDisplay errors={errors} />
                 {
                 isLoading
-                ? <p>Loading...</p>
+                ? <p className="loading-indicator">Loading...</p>
                 :
                 (<form onSubmit={updateCourse}>
                     <div className="main--flex">

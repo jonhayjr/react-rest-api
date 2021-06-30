@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 
+
 const Courses = (props) => {
     //Create State
     const [courses, setCourses] = useState([]);
@@ -52,7 +53,7 @@ const Courses = (props) => {
     return (
         <div className="wrap main--grid">
         {isLoading
-        ? (<p>Loading...</p>)
+        ? <p className="loading-indicator">Loading...</p>
         :
         <>
           {courseLinks}

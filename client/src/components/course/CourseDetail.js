@@ -2,6 +2,7 @@ import {useEffect, useState, useRef} from 'react';
 import ReactMarkdown from 'react-markdown';
 import { NavLink, useHistory} from 'react-router-dom';
 
+
 const CourseDetail = (props) => {
        //Creates state
        const [course, setCourse] = useState([]);
@@ -103,7 +104,7 @@ const CourseDetail = (props) => {
         <div>
             {
                 isLoading
-                ? <p>Loading...</p>
+                ? <p className="loading-indicator">Loading...</p>
                 :
                 (
                 <form>

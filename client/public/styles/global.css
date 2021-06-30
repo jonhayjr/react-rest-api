@@ -205,6 +205,16 @@ input:focus, button:focus, .button:focus, textarea:focus {
     outline: 2px solid #632f2abe;
 }
 
+.loading-indicator {
+    color: #6e4d49;
+    font-size: 30px;
+    justify-content: center;
+    display: flex;
+    height: 100vh;
+    transition: opacity 0.3s linear;
+    width: 100%;
+}
+
 @media screen and (min-width: 600px) {
     .header--signedin li {
         display: inline-block;
