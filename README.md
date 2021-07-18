@@ -9,6 +9,7 @@ This API will provides a way for users to interact with a school database that c
 5. Next, change the directory to the client folder using the command `cd client`.
 6. In this folder, run `npm install` to install the necessary dependencies and then run the command `npm start` to start the app.
 7. The React app will be open up in your browser with [`localhost:3000`](http://localhost:3000/).
+8. Click [`here`](https://react-course-directory.netlify.app/) for a live preview.
 
 ## Customizations
 1. Changed color theme to a medium dark red.
